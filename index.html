@@ -2,12 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Explore Incredible India | Tour & Travel</title>
+<title>Explore India | Tour & Travel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
+<!-- =====================
+     IMAGE MODAL
+===================== -->
+<div class="image-modal" id="imageModal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <img id="modalImage" src="" alt="">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+  </div>
+</div>
 
 <!-- =====================
      NAVBAR
@@ -24,13 +36,41 @@
 </header>
 
 <!-- =====================
-     HERO SECTION
+     HERO SLIDER
 ===================== -->
-<section class="hero" id="home">
-  <div class="hero-content">
-    <h1>Explore Incredible India</h1>
-    <p>Destinations • Culture • Experiences</p>
+<section class="hero-slider slider" id="home" data-interval="2000">
+
+  <div class="slides">
+
+    <div class="slide active"
+         data-title="Goa Beaches"
+         data-desc="Experience vibrant beaches, nightlife and water sports in Goa.">
+      <img src="images/goa.jpg" alt="Goa">
+    </div>
+
+    <div class="slide"
+         data-title="Kerala Backwaters"
+         data-desc="Relax in peaceful backwaters surrounded by nature.">
+      <img src="images/kerala.jpg" alt="Kerala">
+    </div>
+
+    <div class="slide"
+         data-title="Himalayan Adventure"
+         data-desc="Explore snow-capped mountains and thrilling adventures.">
+      <img src="images/himachal.jpg" alt="Himachal">
+    </div>
+
   </div>
+
+  <div class="hero-overlay">
+    <h1>Explore Incredible India</h1>
+    <p>Your journey begins here</p>
+    <a href="#packages" class="hero-btn">View Packages</a>
+  </div>
+
+  <button class="nav prev">❮</button>
+  <button class="nav next">❯</button>
+
 </section>
 
 <!-- =====================
@@ -41,62 +81,30 @@
 
   <div class="grid">
     <div class="card">
-      <img src="images/goa.jpg" alt="Goa">
+      <img src="images/goa.jpg">
       <h3>Goa</h3>
       <p>Beaches & Nightlife</p>
     </div>
 
     <div class="card">
-      <img src="images/rajasthan.jpg" alt="Rajasthan">
+      <img src="images/rajasthan.jpg">
       <h3>Rajasthan</h3>
       <p>Royal Heritage</p>
     </div>
 
     <div class="card">
-      <img src="images/kerala.jpg" alt="Kerala">
+      <img src="images/kerala.jpg">
       <h3>Kerala</h3>
       <p>Backwaters & Nature</p>
     </div>
 
     <div class="card">
-      <img src="images/himachal.jpg" alt="Himachal">
+      <img src="images/himachal.jpg">
       <h3>Himachal</h3>
       <p>Mountains & Snow</p>
     </div>
   </div>
 </section>
-
-<!-- =====================
-     EXPERIENCES
-===================== -->
-<section class="section gray">
-  <h2>Experiences</h2>
-
-  <div class="experience-grid">
-
-    <div class="experience">
-      <img src="images/spiritual.jpg" alt="Spiritual">
-      <h3>Spiritual</h3>
-    </div>
-
-    <div class="experience">
-      <img src="images/adventure.jpg" alt="Adventure">
-      <h3>Adventure</h3>
-    </div>
-
-    <div class="experience">
-      <img src="images/heritage.jpg" alt="Heritage">
-      <h3>Heritage</h3>
-    </div>
-
-    <div class="experience">
-      <img src="images/wildlife.jpg" alt="Wildlife">
-      <h3>Wildlife</h3>
-    </div>
-
-  </div>
-</section>
-
 
 <!-- =====================
      PACKAGES
@@ -106,21 +114,21 @@
 
   <div class="grid">
     <div class="card">
-      <img src="images/goa.jpg" alt="Goa Package">
+      <img src="images/goa.jpg">
       <h3>Goa Tour</h3>
       <p>4 Days / 3 Nights</p>
       <strong>₹9,999</strong>
     </div>
 
     <div class="card">
-      <img src="images/kerala.jpg" alt="Kerala Package">
+      <img src="images/kerala.jpg">
       <h3>Kerala Tour</h3>
       <p>5 Days / 4 Nights</p>
       <strong>₹18,999</strong>
     </div>
 
     <div class="card">
-      <img src="images/rajasthan.jpg" alt="Rajasthan Package">
+      <img src="images/rajasthan.jpg">
       <h3>Rajasthan Tour</h3>
       <p>6 Days / 5 Nights</p>
       <strong>₹21,999</strong>
@@ -167,10 +175,7 @@
   <div class="map-box">
     <iframe
       src="https://www.google.com/maps?q=Lucknow,Uttar+Pradesh&output=embed"
-      width="100%"
-      height="300"
-      style="border:0;"
-      loading="lazy">
+      width="100%" height="300" style="border:0;" loading="lazy">
     </iframe>
   </div>
 </section>
@@ -185,9 +190,14 @@
 <!-- =====================
      FLOATING WHATSAPP
 ===================== -->
-<a href="https://wa.me/919XXXXXXXXX?text=Hello%20I%20want%20to%20book%20a%20tour"
+<a href="https://wa.me/919XXXXXXXXX"
    class="whatsapp-float"
    target="_blank">💬</a>
+
+<!-- =====================
+     JS FILE
+===================== -->
+<script src="js/slider.js"></script>
 
 </body>
 </html>
