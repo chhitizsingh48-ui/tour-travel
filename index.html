@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Explore India | Tour & Travel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -18,6 +18,7 @@
     <img id="modalImage" src="" alt="">
     <h3 id="modalTitle"></h3>
     <p id="modalDesc"></p>
+    <a href="#packages" class="modal-btn" id="modalBookBtn">Book Now</a>
   </div>
 </div>
 
@@ -70,39 +71,90 @@
 
   <button class="nav prev">❮</button>
   <button class="nav next">❯</button>
-
 </section>
 
-<!-- =====================
-     DESTINATIONS
-===================== -->
 <section class="section" id="destinations">
   <h2>Popular Destinations</h2>
 
-  <div class="grid">
-    <div class="card">
-      <img src="images/goa.jpg">
-      <h3>Goa</h3>
-      <p>Beaches & Nightlife</p>
+  <div class="destination-wrapper">
+
+    <button class="dest-btn prev">❮</button>
+
+    <div class="destination-slider">
+      <div class="destination-track">
+
+        <!-- YOUR CARDS GO HERE (IMAGES INCLUDED) -->
+
+        <div class="card destination-card"
+             data-title="Ayodhya"
+             data-desc="Sacred spiritual journey to Ayodhya."
+             data-img="images/ayodhya.jpg">
+          <img src="images/ayodhya.jpg">
+          <h3>Spiritual India</h3>
+          <p>Ayodhya • Kashi</p>
+        </div>
+
+        <div class="card destination-card"
+             data-title="Kashi Vishwanath"
+             data-desc="One of the most sacred Jyotirlingas of Lord Shiva."
+             data-img="images/Kashi_Vishwanath.jpg">
+          <img src="images/Kashi_Vishwanath.jpg">
+          <h3>Kashi Vishwanath</h3>
+          <p>Holy Temple</p>
+        </div>
+
+        <div class="card destination-card"
+             data-title="Wildlife Safari"
+             data-desc="Experience thrilling jungle safaris and wildlife."
+             data-img="images/wildlife.jpg">
+          <img src="images/wildlife.jpg">
+          <h3>Wildlife</h3>
+          <p>Jungle Safari</p>
+        </div>
+
+        <div class="card destination-card"
+             data-title="Himachal Adventure"
+             data-desc="Snow mountains, trekking and adventure sports."
+             data-img="images/himachal.jpg">
+          <img src="images/himachal.jpg">
+          <h3>Adventure</h3>
+          <p>Himachal</p>
+        </div>
+
+        <div class="card destination-card"
+             data-title="Goa"
+             data-desc="Beaches, nightlife and water sports."
+             data-img="images/hero.jpg">
+          <img src="images/hero.jpg">
+          <h3>Goa</h3>
+          <p>Beaches & Fun</p>
+        </div>
+
+        <div class="card destination-card"
+             data-title="Kerala"
+             data-desc="Backwaters, greenery and peaceful nature."
+             data-img="images/kerala.jpg">
+          <img src="images/kerala.jpg">
+          <h3>Kerala</h3>
+          <p>Backwaters</p>
+        </div>
+
+        <div class="card destination-card"
+             data-title="Rajasthan Heritage"
+             data-desc="Royal palaces, forts and cultural heritage."
+             data-img="images/rajasthan.jpg">
+          <img src="images/rajasthan.jpg">
+          <h3>Heritage</h3>
+          <p>Rajasthan</p>
+        </div>
+
+        <!-- END OF CARDS -->
+
+      </div>
     </div>
 
-    <div class="card">
-      <img src="images/rajasthan.jpg">
-      <h3>Rajasthan</h3>
-      <p>Royal Heritage</p>
-    </div>
+    <button class="dest-btn next">❯</button>
 
-    <div class="card">
-      <img src="images/kerala.jpg">
-      <h3>Kerala</h3>
-      <p>Backwaters & Nature</p>
-    </div>
-
-    <div class="card">
-      <img src="images/himachal.jpg">
-      <h3>Himachal</h3>
-      <p>Mountains & Snow</p>
-    </div>
   </div>
 </section>
 
@@ -197,7 +249,7 @@
 <!-- =====================
      JS FILE
 ===================== -->
-<script src="js/slider.js"></script>
+<script src="slider.js"></script>
 
 </body>
 </html>
