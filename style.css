@@ -373,3 +373,38 @@ footer {
 .hero-btn:active {
   transform: scale(0.96);
 }
+/* ===============================
+   DESTINATION SLIDER – FINAL FIX
+================================ */
+
+/* DESKTOP */
+.destination-track {
+  display: flex;
+  gap: 25px;
+  padding: 0;
+}
+
+/* MOBILE – ONE CARD CENTER */
+@media (max-width: 768px) {
+
+  .destination-slider {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .destination-track {
+    gap: 20px;
+    padding-left: calc(50vw - 140px);
+    padding-right: calc(50vw - 140px);
+    will-change: transform;
+    touch-action: pan-y;
+  }
+
+  .destination-card {
+    width: 280px; /* MATCH JS */
+    flex-shrink: 0;
+  }
+}
+.destination-slider {
+  user-select: none;
+}
