@@ -1,255 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Explore India | Tour & Travel</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Explore incredible India with curated tour packages. Discover destinations from Goa to Himachal, Kerala to Rajasthan.">
+  <title>Explore India | Premium Travel Experiences</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- =====================
-     IMAGE MODAL
-===================== -->
-<div class="image-modal" id="imageModal">
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <img id="modalImage" src="" alt="">
-    <h3 id="modalTitle"></h3>
-    <p id="modalDesc"></p>
-    <a href="#packages" class="modal-btn" id="modalBookBtn">Book Now</a>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
   </div>
-</div>
 
-<!-- =====================
-     NAVBAR
-===================== -->
-<header class="navbar">
-  <div class="logo">Explore India</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#destinations">Destinations</a>
-    <a href="#packages">Packages</a>
-    <a href="#booking">Booking</a>
-    <a href="#contact">Contact</a>
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-text">Explore India</span>
+      </div>
+      
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#destinations" class="nav-link">Destinations</a></li>
+        <li><a href="#packages" class="nav-link">Packages</a></li>
+        <li><a href="#booking" class="nav-link">Book Now</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </button>
+    </div>
   </nav>
-</header>
 
-<!-- =====================
-     HERO SLIDER
-===================== -->
-<section class="hero-slider slider" id="home" data-interval="2000">
+  <!-- Hero Slider -->
+  <section class="hero-section" id="home">
+    <div class="hero-slider">
+      
+      <div class="hero-slide active">
+        <img src="images/goa.jpg" alt="Goa Beaches" class="hero-image">
+        <div class="hero-overlay"></div>
+      </div>
 
-  <div class="slides">
+      <div class="hero-slide">
+        <img src="images/kerala.jpg" alt="Kerala Backwaters" class="hero-image">
+        <div class="hero-overlay"></div>
+      </div>
 
-    <div class="slide active"
-         data-title="Goa Beaches"
-         data-desc="Experience vibrant beaches, nightlife and water sports in Goa.">
-      <img src="images/goa.jpg" alt="Goa">
+      <div class="hero-slide">
+        <img src="images/himachal.jpg" alt="Himalayan Adventure" class="hero-image">
+        <div class="hero-overlay"></div>
+      </div>
+
     </div>
 
-    <div class="slide"
-         data-title="Kerala Backwaters"
-         data-desc="Relax in peaceful backwaters surrounded by nature.">
-      <img src="images/kerala.jpg" alt="Kerala">
-    </div>
-
-    <div class="slide"
-         data-title="Himalayan Adventure"
-         data-desc="Explore snow-capped mountains and thrilling adventures.">
-      <img src="images/himachal.jpg" alt="Himachal">
-    </div>
-
-  </div>
-
-  <div class="hero-overlay">
-    <h1>Explore Incredible India</h1>
-    <p>Your journey begins here</p>
-    <a href="#packages" class="hero-btn">View Packages</a>
-  </div>
-
-  <button class="nav prev">❮</button>
-  <button class="nav next">❯</button>
-</section>
-
-<section class="section" id="destinations">
-  <h2>Popular Destinations</h2>
-
-  <div class="destination-wrapper">
-
-    <button class="dest-btn prev">❮</button>
-
-    <div class="destination-slider">
-      <div class="destination-track">
-
-        <!-- YOUR CARDS GO HERE (IMAGES INCLUDED) -->
-
-        <div class="card destination-card"
-             data-title="Ayodhya"
-             data-desc="Sacred spiritual journey to Ayodhya."
-             data-img="images/ayodhya.jpg">
-          <img src="images/ayodhya.jpg">
-          <h3>Spiritual India</h3>
-          <p>Ayodhya • Kashi</p>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="title-line">Discover the</span>
+          <span class="title-line highlight">Soul of India</span>
+        </h1>
+        <p class="hero-subtitle">Curated journeys through India's most enchanting destinations</p>
+        <div class="hero-buttons">
+          <a href="#packages" class="btn btn-primary">Explore Packages</a>
+          <a href="#destinations" class="btn btn-secondary">View Destinations</a>
         </div>
-
-        <div class="card destination-card"
-             data-title="Kashi Vishwanath"
-             data-desc="One of the most sacred Jyotirlingas of Lord Shiva."
-             data-img="images/Kashi_Vishwanath.jpg">
-          <img src="images/Kashi_Vishwanath.jpg">
-          <h3>Kashi Vishwanath</h3>
-          <p>Holy Temple</p>
-        </div>
-
-        <div class="card destination-card"
-             data-title="Wildlife Safari"
-             data-desc="Experience thrilling jungle safaris and wildlife."
-             data-img="images/wildlife.jpg">
-          <img src="images/wildlife.jpg">
-          <h3>Wildlife</h3>
-          <p>Jungle Safari</p>
-        </div>
-
-        <div class="card destination-card"
-             data-title="Himachal Adventure"
-             data-desc="Snow mountains, trekking and adventure sports."
-             data-img="images/himachal.jpg">
-          <img src="images/himachal.jpg">
-          <h3>Adventure</h3>
-          <p>Himachal</p>
-        </div>
-
-        <div class="card destination-card"
-             data-title="Goa"
-             data-desc="Beaches, nightlife and water sports."
-             data-img="images/hero.jpg">
-          <img src="images/hero.jpg">
-          <h3>Goa</h3>
-          <p>Beaches & Fun</p>
-        </div>
-
-        <div class="card destination-card"
-             data-title="Kerala"
-             data-desc="Backwaters, greenery and peaceful nature."
-             data-img="images/kerala.jpg">
-          <img src="images/kerala.jpg">
-          <h3>Kerala</h3>
-          <p>Backwaters</p>
-        </div>
-
-        <div class="card destination-card"
-             data-title="Rajasthan Heritage"
-             data-desc="Royal palaces, forts and cultural heritage."
-             data-img="images/rajasthan.jpg">
-          <img src="images/rajasthan.jpg">
-          <h3>Heritage</h3>
-          <p>Rajasthan</p>
-        </div>
-
-        <!-- END OF CARDS -->
-
       </div>
     </div>
 
-    <button class="dest-btn next">❯</button>
-
-  </div>
-</section>
-
-<!-- =====================
-     PACKAGES
-===================== -->
-<section class="section" id="packages">
-  <h2>Tour Packages</h2>
-
-  <div class="grid">
-    <div class="card">
-      <img src="images/goa.jpg">
-      <h3>Goa Tour</h3>
-      <p>4 Days / 3 Nights</p>
-      <strong>₹9,999</strong>
+    <div class="hero-controls">
+      <button class="hero-arrow hero-prev" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <button class="hero-arrow hero-next" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
     </div>
 
-    <div class="card">
-      <img src="images/kerala.jpg">
-      <h3>Kerala Tour</h3>
-      <p>5 Days / 4 Nights</p>
-      <strong>₹18,999</strong>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
+  </section>
 
-    <div class="card">
-      <img src="images/rajasthan.jpg">
-      <h3>Rajasthan Tour</h3>
-      <p>6 Days / 5 Nights</p>
-      <strong>₹21,999</strong>
+  <!-- Destinations Section -->
+  <section class="destinations-section" id="destinations">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Explore</span>
+        <h2 class="section-title">Popular Destinations</h2>
+        <p class="section-subtitle">Handpicked locations that showcase India's incredible diversity</p>
+      </div>
+
+      <div class="destinations-slider-wrapper">
+        <button class="slider-nav slider-prev" aria-label="Previous destinations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+
+        <div class="destinations-slider" id="destinationsSlider">
+          <div class="destinations-track" id="destinationsTrack">
+            
+            <div class="destination-card" 
+                 data-title="Ayodhya - Spiritual Journey"
+                 data-desc="Experience divine serenity in the sacred city of Ayodhya. Visit ancient temples, witness spiritual ceremonies, and immerse yourself in centuries of religious heritage."
+                 data-img="images/ayodhya.jpg">
+              <div class="card-image">
+                <img src="images/ayodhya.jpg" alt="Ayodhya" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Spiritual</span>
+                <h3 class="card-title">Ayodhya</h3>
+                <p class="card-location">Uttar Pradesh</p>
+              </div>
+            </div>
+
+            <div class="destination-card"
+                 data-title="Kashi Vishwanath Temple"
+                 data-desc="One of the twelve Jyotirlingas, the holiest of Shiva temples. Experience the mesmerizing Ganga Aarti and explore the spiritual heart of Varanasi."
+                 data-img="images/Kashi_Vishwanath.jpg">
+              <div class="card-image">
+                <img src="images/Kashi_Vishwanath.jpg" alt="Kashi Vishwanath" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Heritage</span>
+                <h3 class="card-title">Kashi Vishwanath</h3>
+                <p class="card-location">Varanasi</p>
+              </div>
+            </div>
+
+            <div class="destination-card"
+                 data-title="Wildlife Safari"
+                 data-desc="Embark on thrilling jungle safaris in India's premier national parks. Spot majestic tigers, leopards, and elephants in their natural habitat."
+                 data-img="images/wildlife.jpg">
+              <div class="card-image">
+                <img src="images/wildlife.jpg" alt="Wildlife Safari" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Wildlife</span>
+                <h3 class="card-title">Jungle Safari</h3>
+                <p class="card-location">National Parks</p>
+              </div>
+            </div>
+
+            <div class="destination-card"
+                 data-title="Himachal Adventure"
+                 data-desc="Conquer snow-capped peaks, trek through pristine valleys, and experience adventure sports in the magnificent Himalayas."
+                 data-img="images/himachal.jpg">
+              <div class="card-image">
+                <img src="images/himachal.jpg" alt="Himachal Pradesh" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Adventure</span>
+                <h3 class="card-title">Himachal</h3>
+                <p class="card-location">Himalayan Region</p>
+              </div>
+            </div>
+
+            <div class="destination-card"
+                 data-title="Goa - Beach Paradise"
+                 data-desc="Relax on pristine beaches, enjoy water sports, experience vibrant nightlife, and savor world-class cuisine in India's beach capital."
+                 data-img="images/goa.jpg">
+              <div class="card-image">
+                <img src="images/goa.jpg" alt="Goa" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Beach</span>
+                <h3 class="card-title">Goa</h3>
+                <p class="card-location">Western Coast</p>
+              </div>
+            </div>
+
+            <div class="destination-card"
+                 data-title="Kerala Backwaters"
+                 data-desc="Cruise through tranquil backwaters, stay in traditional houseboats, and experience the lush greenery of God's Own Country."
+                 data-img="images/kerala.jpg">
+              <div class="card-image">
+                <img src="images/kerala.jpg" alt="Kerala" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Nature</span>
+                <h3 class="card-title">Kerala</h3>
+                <p class="card-location">Southern India</p>
+              </div>
+            </div>
+
+            <div class="destination-card"
+                 data-title="Rajasthan Heritage"
+                 data-desc="Explore magnificent forts, luxurious palaces, and rich cultural traditions. Experience the royal grandeur of the desert state."
+                 data-img="images/rajasthan.jpg">
+              <div class="card-image">
+                <img src="images/rajasthan.jpg" alt="Rajasthan" loading="lazy">
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-content">
+                <span class="card-category">Royal</span>
+                <h3 class="card-title">Rajasthan</h3>
+                <p class="card-location">Desert Kingdom</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="slider-nav slider-next" aria-label="Next destinations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages Section -->
+  <section class="packages-section" id="packages">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Our Offerings</span>
+        <h2 class="section-title">Featured Packages</h2>
+        <p class="section-subtitle">Carefully crafted experiences for unforgettable journeys</p>
+      </div>
+
+      <div class="packages-grid">
+        
+        <div class="package-card">
+          <div class="package-image">
+            <img src="images/goa.jpg" alt="Goa Tour Package" loading="lazy">
+            <div class="package-badge">Popular</div>
+          </div>
+          <div class="package-content">
+            <h3 class="package-title">Goa Beach Escape</h3>
+            <div class="package-features">
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> 4 Days / 3 Nights</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Accommodation</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Meals Included</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Sightseeing</span>
+            </div>
+            <div class="package-footer">
+              <div class="package-price">
+                <span class="price-label">Starting from</span>
+                <span class="price-amount">₹9,999</span>
+                <span class="price-per">per person</span>
+              </div>
+              <a href="#booking" class="package-btn">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="package-card featured">
+          <div class="package-image">
+            <img src="images/kerala.jpg" alt="Kerala Tour Package" loading="lazy">
+            <div class="package-badge">Best Seller</div>
+          </div>
+          <div class="package-content">
+            <h3 class="package-title">Kerala Backwaters</h3>
+            <div class="package-features">
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> 5 Days / 4 Nights</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Houseboat Stay</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> All Meals</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Full Tour Guide</span>
+            </div>
+            <div class="package-footer">
+              <div class="package-price">
+                <span class="price-label">Starting from</span>
+                <span class="price-amount">₹18,999</span>
+                <span class="price-per">per person</span>
+              </div>
+              <a href="#booking" class="package-btn">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="package-card">
+          <div class="package-image">
+            <img src="images/rajasthan.jpg" alt="Rajasthan Tour Package" loading="lazy">
+            <div class="package-badge">Premium</div>
+          </div>
+          <div class="package-content">
+            <h3 class="package-title">Royal Rajasthan</h3>
+            <div class="package-features">
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> 6 Days / 5 Nights</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Palace Hotels</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Heritage Tour</span>
+              <span class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> Cultural Shows</span>
+            </div>
+            <div class="package-footer">
+              <div class="package-price">
+                <span class="price-label">Starting from</span>
+                <span class="price-amount">₹21,999</span>
+                <span class="price-per">per person</span>
+              </div>
+              <a href="#booking" class="package-btn">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section class="booking-section" id="booking">
+    <div class="container">
+      <div class="booking-wrapper">
+        <div class="booking-info">
+          <span class="section-label">Plan Your Trip</span>
+          <h2 class="section-title">Start Your Journey</h2>
+          <p class="booking-description">Fill in your details and our travel experts will create a personalized itinerary just for you. Get instant confirmation and exclusive deals.</p>
+          
+          <div class="booking-features">
+            <div class="booking-feature">
+              <div class="feature-icon">✓</div>
+              <div class="feature-text">
+                <h4>Best Price Guarantee</h4>
+                <p>Competitive rates with no hidden charges</p>
+              </div>
+            </div>
+            <div class="booking-feature">
+              <div class="feature-icon">✓</div>
+              <div class="feature-text">
+                <h4>24/7 Support</h4>
+                <p>Dedicated assistance throughout your trip</p>
+              </div>
+            </div>
+            <div class="booking-feature">
+              <div class="feature-icon">✓</div>
+              <div class="feature-text">
+                <h4>Flexible Booking</h4>
+                <p>Easy modification and cancellation policies</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form class="booking-form" id="bookingForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="destination">Destination</label>
+              <select id="destination" name="destination" required>
+                <option value="">Select destination</option>
+                <option value="goa">Goa</option>
+                <option value="kerala">Kerala</option>
+                <option value="rajasthan">Rajasthan</option>
+                <option value="himachal">Himachal</option>
+                <option value="ayodhya">Ayodhya</option>
+                <option value="varanasi">Varanasi</option>
+                <option value="wildlife">Wildlife Safari</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="date">Travel Date</label>
+              <input type="date" id="date" name="date" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Special Requirements (Optional)</label>
+            <textarea id="message" name="message" rows="4" placeholder="Tell us about any special requirements or preferences..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            <span>Submit Booking Request</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <p class="form-note">By submitting, you agree to our terms and privacy policy</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-info-box">
+          <div class="section-header">
+            <span class="section-label">Get in Touch</span>
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Have questions? We're here to help plan your perfect journey</p>
+          </div>
+
+          <div class="contact-methods">
+            <div class="contact-method">
+              <div class="method-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+              </div>
+              <div class="method-content">
+                <h4>Phone</h4>
+                <p>+91 9XXXXXXXXX</p>
+                <span>Mon-Sat, 9:00 AM - 6:00 PM</span>
+              </div>
+            </div>
+
+            <div class="contact-method">
+              <div class="method-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <path d="M22 6l-10 7L2 6"/>
+                </svg>
+              </div>
+              <div class="method-content">
+                <h4>Email</h4>
+                <p>info@exploreindia.com</p>
+                <span>We'll respond within 24 hours</span>
+              </div>
+            </div>
+
+            <div class="contact-method">
+              <div class="method-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div class="method-content">
+                <h4>Office</h4>
+                <p>Lucknow, Uttar Pradesh</p>
+                <span>Visit by appointment</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-map">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.99912302866!2d80.77769775!3d26.8466999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd991f32b16b%3A0x93ccba8909978be7!2sLucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1641234567890!5m2!1sen!2sin"
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="brand-icon">✦</span>
+            <span class="brand-text">Explore India</span>
+          </div>
+          <p class="footer-tagline">Discover the incredible beauty and diversity of India with expertly curated travel experiences.</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#destinations">Destinations</a></li>
+              <li><a href="#packages">Packages</a></li>
+              <li><a href="#booking">Book Now</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Popular Tours</h4>
+            <ul>
+              <li><a href="#packages">Goa Beach Tour</a></li>
+              <li><a href="#packages">Kerala Backwaters</a></li>
+              <li><a href="#packages">Rajasthan Heritage</a></li>
+              <li><a href="#packages">Himalayan Adventure</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#contact">About Us</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#contact">Privacy Policy</a></li>
+              <li><a href="#contact">Terms & Conditions</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Explore India. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+              <path d="M17.5 6.5h.01"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/919XXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contact on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+  <!-- Destination Modal -->
+  <div class="destination-modal" id="destinationModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="modal-image">
+        <img id="modalImage" src="" alt="">
+      </div>
+      <div class="modal-body">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+        <a href="#booking" class="btn btn-primary" id="modalBookBtn">Book This Destination</a>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- =====================
-     BOOKING FORM
-===================== -->
-<section class="section" id="booking">
-  <h2>Book Your Trip</h2>
-
-  <form class="booking-form">
-    <input type="text" placeholder="Your Name" required>
-    <input type="tel" placeholder="Phone Number" required>
-    <input type="email" placeholder="Email Address" required>
-
-    <select required>
-      <option value="">Select Destination</option>
-      <option>Goa</option>
-      <option>Kerala</option>
-      <option>Rajasthan</option>
-      <option>Himachal</option>
-    </select>
-
-    <input type="date" required>
-    <textarea placeholder="Message (optional)"></textarea>
-
-    <button type="submit">Submit Booking</button>
-  </form>
-</section>
-
-<!-- =====================
-     CONTACT
-===================== -->
-<section class="section gray" id="contact">
-  <h2>Contact Us</h2>
-
-  <p>📞 +91 9XXXXXXXXX</p>
-  <p>✉️ yourtravel@email.com</p>
-  <p>📍 Lucknow, Uttar Pradesh</p>
-
-  <div class="map-box">
-    <iframe
-      src="https://www.google.com/maps?q=Lucknow,Uttar+Pradesh&output=embed"
-      width="100%" height="300" style="border:0;" loading="lazy">
-    </iframe>
-  </div>
-</section>
-
-<!-- =====================
-     FOOTER
-===================== -->
-<footer>
-  <p>© 2025 Explore India | Tour & Travel</p>
-</footer>
-
-<!-- =====================
-     FLOATING WHATSAPP
-===================== -->
-<a href="https://wa.me/919XXXXXXXXX"
-   class="whatsapp-float"
-   target="_blank">💬</a>
-
-<!-- =====================
-     JS FILE
-===================== -->
-<script src="slider.js"></script>
+  <!-- Scripts -->
+  <script src="script.js"></script>
 
 </body>
 </html>
