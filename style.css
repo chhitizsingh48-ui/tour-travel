@@ -1522,4 +1522,21 @@ card-title {
   .contact-map {
     height: 300px;
   }
+}/* ===== MOBILE TOUCH FIX (GLOBAL SAFE) ===== */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.destinations-slider {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.destinations-track {
+  touch-action: pan-y;
+  will-change: transform;
+}
+
+.destination-card {
+  touch-action: manipulation;
 }
