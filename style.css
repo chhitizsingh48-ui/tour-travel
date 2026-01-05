@@ -302,6 +302,11 @@ button {
 .mobile-menu-overlay.active {
   opacity: 1;
 }
+@media (max-width: 768px) {
+  .mobile-menu-overlay {
+    display: block;
+  }
+}
 
 /* Hero Section */
 .hero-section {
