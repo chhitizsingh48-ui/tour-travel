@@ -207,13 +207,14 @@ class DestinationsSlider {
     });
     
     // Touch/Mouse events
+    // Use original events, normalize inside handlers. Use non-passive touchmove so we can preventDefault.
     this.slider.addEventListener('mousedown', (e) => this.startDrag(e));
     this.slider.addEventListener('mousemove', (e) => this.drag(e));
     this.slider.addEventListener('mouseup', () => this.endDrag());
     this.slider.addEventListener('mouseleave', () => this.endDrag());
     
-    this.slider.addEventListener('touchstart', (e) => this.startDrag(e.touches[0]));
-    this.slider.addEventListener('touchmove', (e) => this.drag(e.touches[0]));
+    this.slider.addEventListener('touchstart', (e) => this.startDrag(e));
+    this.slider.addEventListener('touchmove', (e) => this.drag(e), { passive: false });
     this.slider.addEventListener('touchend', () => this.endDrag());
     
     // Stop auto-slide on hover
@@ -223,6 +224,7 @@ class DestinationsSlider {
     // Card click for modal
     this.cards.forEach(card => {
       card.addEventListener('click', (e) => {
+        // If user was dragging, ignore click
         if (!this.isDragging) {
           this.openModal(card);
         }
@@ -359,10 +361,27 @@ class DestinationsSlider {
     this.startAutoSlide();
   }
   
+  // Normalize input and return an object with clientX and originalEvent
+  _getPointInfo(e) {
+    if (!e) return { clientX: 0, originalEvent: e };
+    if (e.type && e.type.startsWith('touch')) {
+      // Touch event
+      const touch = e.touches && e.touches[0] ? e.touches[0] : (e.changedTouches && e.changedTouches[0]);
+      return { clientX: touch ? touch.clientX : 0, originalEvent: e };
+    }
+    // Mouse event or a Touch/Pointer-like object passed directly
+    if (typeof e.clientX === 'number') {
+      return { clientX: e.clientX, originalEvent: e };
+    }
+    return { clientX: 0, originalEvent: e };
+  }
+  
   startDrag(e) {
     this.stopAutoSlide();
     this.isDragging = true;
-    this.startX = e.clientX || e.pageX;
+    const info = this._getPointInfo(e);
+    this.startX = info.clientX;
+    this.currentX = info.clientX;
     this.slider.style.cursor = 'grabbing';
     this.track.style.transition = 'none';
   }
@@ -370,12 +389,13 @@ class DestinationsSlider {
   drag(e) {
     if (!this.isDragging) return;
     
-    // Only prevent default if actually dragging (moved more than 5px)
-    const currentX = e.clientX || e.pageX || (e.touches && e.touches[0].clientX);
+    const info = this._getPointInfo(e);
+    const currentX = info.clientX;
     const diff = Math.abs(currentX - this.startX);
     
-    if (diff > 5) {
-      e.preventDefault(); // Prevent scrolling only when actually dragging
+    // Only prevent default when user has moved enough to be considered a drag.
+    if (diff > 5 && info.originalEvent && typeof info.originalEvent.preventDefault === 'function') {
+      info.originalEvent.preventDefault();
     }
     
     this.currentX = currentX;

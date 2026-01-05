@@ -645,6 +645,8 @@ section {
   flex: 1;
   overflow: hidden;
   cursor: grab;
+  /* allow JS to handle horizontal gestures on mobile while preserving vertical scrolling */
+  touch-action: pan-y;
 }
 
 .destinations-slider:active {
@@ -689,7 +691,7 @@ section {
   overflow: hidden;
 }
 
-.card-image img {
+card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -707,7 +709,7 @@ section {
   transition: var(--transition-base);
 }
 
-.destination-card:hover .card-overlay {
+destination-card:hover .card-overlay {
   background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6));
 }
 
@@ -725,7 +727,7 @@ section {
   margin-bottom: 8px;
 }
 
-.card-title {
+card-title {
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 600;
@@ -1500,7 +1502,7 @@ section {
 
 @media (max-width: 480px) {
   section {
-    padding: 60px 0;
+    padding: 60px 5%;
   }
 
   .section-header {
