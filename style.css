@@ -63,6 +63,8 @@ body {
   background: var(--bg-white);
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* Ensure touch works globally */
+  touch-action: manipulation;
 }
 
 img {
@@ -74,6 +76,8 @@ img {
 a {
   text-decoration: none;
   color: inherit;
+  /* Ensure links work on touch devices */
+  touch-action: manipulation;
 }
 
 button {
@@ -81,6 +85,9 @@ button {
   border: none;
   background: none;
   font-family: inherit;
+  /* Ensure buttons work on touch devices */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -667,6 +674,8 @@ section {
   cursor: pointer;
   transition: all var(--transition-base);
   box-shadow: var(--shadow-sm);
+  /* Enable touch interactions */
+  touch-action: manipulation;
 }
 
 .destination-card:hover {

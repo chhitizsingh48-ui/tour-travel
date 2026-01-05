@@ -369,11 +369,18 @@ class DestinationsSlider {
   
   drag(e) {
     if (!this.isDragging) return;
-    e.preventDefault();
     
-    this.currentX = e.clientX || e.pageX;
-    const diff = this.currentX - this.startX;
-    this.track.style.transform = `translateX(${this.translateX + diff}px)`;
+    // Only prevent default if actually dragging (moved more than 5px)
+    const currentX = e.clientX || e.pageX || (e.touches && e.touches[0].clientX);
+    const diff = Math.abs(currentX - this.startX);
+    
+    if (diff > 5) {
+      e.preventDefault(); // Prevent scrolling only when actually dragging
+    }
+    
+    this.currentX = currentX;
+    const dragDiff = this.currentX - this.startX;
+    this.track.style.transform = `translateX(${this.translateX + dragDiff}px)`;
   }
   
   endDrag() {
