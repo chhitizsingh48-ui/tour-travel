@@ -1,527 +1,319 @@
-// Loading Screen
+/* ===============================
+   LOADING SCREEN
+================================ */
 window.addEventListener('load', () => {
   const loadingScreen = document.getElementById('loadingScreen');
-  setTimeout(() => {
-    loadingScreen.classList.add('hidden');
-  }, 800);
+  if (loadingScreen) {
+    setTimeout(() => loadingScreen.classList.add('hidden'), 800);
+  }
 });
 
-// Theme Toggle
+/* ===============================
+   THEME TOGGLE
+================================ */
 const themeToggle = document.getElementById('themeToggle');
 const htmlElement = document.documentElement;
 
-// Check for saved theme preference or default to 'light'
 const currentTheme = localStorage.getItem('theme') || 'light';
 htmlElement.setAttribute('data-theme', currentTheme);
 
 themeToggle?.addEventListener('click', () => {
-  const currentTheme = htmlElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  
+  const newTheme = htmlElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
   htmlElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
-  
-  // Add animation effect
-  themeToggle.style.transform = 'rotate(360deg)';
-  setTimeout(() => {
-    themeToggle.style.transform = '';
-  }, 300);
 });
 
-// Mobile Menu
+/* ===============================
+   MOBILE MENU
+================================ */
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-mobileMenuToggle.addEventListener('click', () => {
+function closeMenu() {
+  mobileMenuToggle?.classList.remove('active');
+  navMenu?.classList.remove('active');
+  mobileMenuOverlay?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+mobileMenuToggle?.addEventListener('click', () => {
   mobileMenuToggle.classList.toggle('active');
   navMenu.classList.toggle('active');
   mobileMenuOverlay.classList.toggle('active');
   document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
 });
 
-mobileMenuOverlay.addEventListener('click', () => {
-  mobileMenuToggle.classList.remove('active');
-  navMenu.classList.remove('active');
-  mobileMenuOverlay.classList.remove('active');
-  document.body.style.overflow = '';
-});
+mobileMenuOverlay?.addEventListener('click', closeMenu);
+navLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-navLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenuToggle.classList.remove('active');
-    navMenu.classList.remove('active');
-    mobileMenuOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-  });
-});
-
-// Navbar Scroll Effect
+/* ===============================
+   NAVBAR SCROLL + ACTIVE LINK
+================================ */
 let lastScroll = 0;
 const navbar = document.getElementById('navbar');
+const sections = document.querySelectorAll('section[id]');
 
 window.addEventListener('scroll', () => {
   const currentScroll = window.pageYOffset;
-  
+
   if (currentScroll > 100) {
-    if (currentScroll > lastScroll) {
-      navbar.classList.add('hidden');
-    } else {
-      navbar.classList.remove('hidden');
-    }
+    navbar?.classList.toggle('hidden', currentScroll > lastScroll);
   }
-  
   lastScroll = currentScroll;
-});
 
-// Active Navigation
-const sections = document.querySelectorAll('section[id]');
-
-function updateActiveNav() {
-  const scrollY = window.pageYOffset;
-  
   sections.forEach(section => {
-    const sectionHeight = section.offsetHeight;
-    const sectionTop = section.offsetTop - 150;
-    const sectionId = section.getAttribute('id');
-    
-    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+    const top = section.offsetTop - 150;
+    const height = section.offsetHeight;
+    const id = section.getAttribute('id');
+
+    if (currentScroll > top && currentScroll <= top + height) {
       document.querySelector('.nav-link.active')?.classList.remove('active');
-      document.querySelector(`.nav-link[href="#${sectionId}"]`)?.classList.add('active');
+      document.querySelector(`.nav-link[href="#${id}"]`)?.classList.add('active');
     }
   });
-}
+});
 
-window.addEventListener('scroll', updateActiveNav);
-
-// Hero Slider
+/* ===============================
+   HERO SLIDER
+================================ */
 class HeroSlider {
   constructor() {
     this.slides = document.querySelectorAll('.hero-slide');
-    this.currentSlide = 0;
-    this.slideInterval = null;
-    this.autoSlideDelay = 4000; // 4 seconds
-    
-    if (this.slides.length > 0) {
-      this.init();
-    }
+    this.index = 0;
+    this.delay = 4000;
+    this.timer = null;
+    if (this.slides.length) this.init();
   }
-  
+
   init() {
-    const prevBtn = document.querySelector('.hero-prev');
-    const nextBtn = document.querySelector('.hero-next');
-    const heroSection = document.querySelector('.hero-section');
-    
-    if (prevBtn) prevBtn.addEventListener('click', () => {
-      this.stopAutoSlide();
-      this.prevSlide();
-      this.startAutoSlide();
-    });
-    
-    if (nextBtn) nextBtn.addEventListener('click', () => {
-      this.stopAutoSlide();
-      this.nextSlide();
-      this.startAutoSlide();
-    });
-    
-    if (heroSection) {
-      heroSection.addEventListener('mouseenter', () => this.stopAutoSlide());
-      heroSection.addEventListener('mouseleave', () => this.startAutoSlide());
-    }
-    
-    this.startAutoSlide();
+    document.querySelector('.hero-prev')?.addEventListener('click', () => this.move(-1));
+    document.querySelector('.hero-next')?.addEventListener('click', () => this.move(1));
+    this.start();
   }
-  
-  showSlide(index) {
-    this.slides.forEach(slide => slide.classList.remove('active'));
-    if (this.slides[index]) {
-      this.slides[index].classList.add('active');
-    }
+
+  move(dir) {
+    this.stop();
+    this.index = (this.index + dir + this.slides.length) % this.slides.length;
+    this.update();
+    this.start();
   }
-  
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-    this.showSlide(this.currentSlide);
+
+  update() {
+    this.slides.forEach(s => s.classList.remove('active'));
+    this.slides[this.index]?.classList.add('active');
   }
-  
-  prevSlide() {
-    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-    this.showSlide(this.currentSlide);
+
+  start() {
+    this.timer = setInterval(() => this.move(1), this.delay);
   }
-  
-  startAutoSlide() {
-    this.stopAutoSlide();
-    this.slideInterval = setInterval(() => this.nextSlide(), this.autoSlideDelay);
-  }
-  
-  stopAutoSlide() {
-    if (this.slideInterval) {
-      clearInterval(this.slideInterval);
-      this.slideInterval = null;
-    }
+
+  stop() {
+    clearInterval(this.timer);
   }
 }
-
 new HeroSlider();
 
-// Destinations Slider
+/* ===============================
+   DESTINATIONS SLIDER (FIXED)
+================================ */
 class DestinationsSlider {
   constructor() {
     this.slider = document.getElementById('destinationsSlider');
     this.track = document.getElementById('destinationsTrack');
-    this.prevBtn = document.querySelector('.slider-prev');
-    this.nextBtn = document.querySelector('.slider-next');
-    this.cards = document.querySelectorAll('.destination-card');
-    
-    this.currentIndex = 0;
-    this.isDragging = false;
+    this.cards = [...document.querySelectorAll('.destination-card')];
+
+    this.index = 0;
+    this.translateX = 0;
     this.startX = 0;
     this.currentX = 0;
-    this.translateX = 0;
-    this.autoSlideInterval = null;
-    this.autoSlideDelay = 3000; // 3 seconds
-    this.autoSlideDirection = 1; // 1 for forward, -1 for backward
-    
-    this.init();
+    this.dragging = false;
+
+    this.delay = 3000;
+    this.timer = null;
+    this.direction = 1;
+
+    if (this.slider && this.cards.length) this.init();
   }
-  
+
   init() {
-    if (!this.slider || !this.track) return;
-    
-    // Wait for layout to be ready
-    setTimeout(() => {
-      this.updatePosition(false);
-    }, 100);
-    
-    this.prevBtn?.addEventListener('click', () => {
-      this.stopAutoSlide();
-      this.slide(-1);
-      this.startAutoSlide();
-    });
-    
-    this.nextBtn?.addEventListener('click', () => {
-      this.stopAutoSlide();
-      this.slide(1);
-      this.startAutoSlide();
-    });
-    
-    // Touch/Mouse events
-    // Use original events, normalize inside handlers. Use non-passive touchmove so we can preventDefault.
-    this.slider.addEventListener('mousedown', (e) => this.startDrag(e));
-    this.slider.addEventListener('mousemove', (e) => this.drag(e));
+    setTimeout(() => this.update(false), 100);
+
+    this.slider.addEventListener('mousedown', e => this.startDrag(e));
+    this.slider.addEventListener('mousemove', e => this.drag(e));
     this.slider.addEventListener('mouseup', () => this.endDrag());
     this.slider.addEventListener('mouseleave', () => this.endDrag());
-    
-    this.slider.addEventListener('touchstart', (e) => this.startDrag(e));
-    this.slider.addEventListener('touchmove', (e) => this.drag(e), { passive: false });
+
+    this.slider.addEventListener('touchstart', e => this.startDrag(e));
+    this.slider.addEventListener('touchmove', e => this.drag(e), { passive: false });
     this.slider.addEventListener('touchend', () => this.endDrag());
-    
-    // Stop auto-slide on hover
-    this.slider.addEventListener('mouseenter', () => this.stopAutoSlide());
-    this.slider.addEventListener('mouseleave', () => this.startAutoSlide());
-    
-    // Card click for modal
-    this.cards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        // If user was dragging, ignore click
-        if (!this.isDragging) {
-          this.openModal(card);
-        }
-      });
-    });
-    
-    window.addEventListener('resize', () => {
-      const maxIndex = this.getMaxIndex();
-      this.currentIndex = Math.min(this.currentIndex, maxIndex);
-      this.updatePosition(false); // Recalculate without animation
-    });
-    
-    // Start auto-slide
-    this.startAutoSlide();
+
+    window.addEventListener('resize', () => this.update(false));
+    this.start();
   }
-  
-  getCardWidth() {
-    // Fixed card width from CSS: 320px card + 24px gap = 344px
-    return 344;
+
+  getMetrics() {
+    const a = this.cards[0].getBoundingClientRect();
+    let gap = 0;
+    if (this.cards[1]) {
+      const b = this.cards[1].getBoundingClientRect();
+      gap = b.left - a.right;
+    }
+    return { width: a.width, gap };
   }
-  
-  getVisibleCards() {
-    const sliderWidth = this.slider.offsetWidth;
-    const cardWidth = 344; // 320px card + 24px gap
-    
-    if (sliderWidth === 0) return 1;
-    
-    // Calculate how many cards fit
-    const visibleCards = Math.floor(sliderWidth / cardWidth);
-    
-    // Return at least 1, maximum total cards available
-    return Math.max(1, Math.min(visibleCards, this.cards.length));
-  }
-  
+
   getMaxIndex() {
-    const cardWidth = 344; // 320px + 24px gap
-    const sliderWidth = this.slider.offsetWidth;
-    const totalTrackWidth = this.cards.length * cardWidth;
-    
-    // If all cards fit in the slider, no scrolling needed
-    if (totalTrackWidth <= sliderWidth) {
-      return 0;
-    }
-    
-    // Calculate how much we can scroll (in pixels)
-    const maxScrollDistance = totalTrackWidth - sliderWidth;
-    
-    // Convert to index (how many card-widths we can scroll)
-    const maxIndex = Math.ceil(maxScrollDistance / cardWidth);
-    
-    return maxIndex;
+    return window.innerWidth < 768
+      ? this.cards.length - 1
+      : Math.max(0, this.cards.length - 3);
   }
-  
-  startAutoSlide() {
-    this.stopAutoSlide();
-    this.autoSlideInterval = setInterval(() => {
-      const maxIndex = this.getMaxIndex();
-      
-      // Only auto-slide if there are cards to show
-      if (maxIndex === 0) {
-        this.stopAutoSlide();
-        return;
-      }
-      
-      // Move in current direction
-      this.currentIndex += this.autoSlideDirection;
-      
-      // Reverse direction at boundaries
-      if (this.currentIndex >= maxIndex) {
-        this.currentIndex = maxIndex;
-        this.autoSlideDirection = -1;
-      } else if (this.currentIndex <= 0) {
-        this.currentIndex = 0;
-        this.autoSlideDirection = 1;
-      }
-      
-      this.updatePosition(true);
-    }, this.autoSlideDelay);
+
+  start() {
+    this.stop();
+    this.timer = setInterval(() => {
+      this.index += this.direction;
+      if (this.index >= this.getMaxIndex()) this.direction = -1;
+      if (this.index <= 0) this.direction = 1;
+      this.update(true);
+    }, this.delay);
   }
-  
-  stopAutoSlide() {
-    if (this.autoSlideInterval) {
-      clearInterval(this.autoSlideInterval);
-      this.autoSlideInterval = null;
-    }
+
+  stop() {
+    clearInterval(this.timer);
   }
-  
-  updatePosition(animate = true) {
-    const cardWidth = 344; // 320px + 24px gap
-    const sliderWidth = this.slider.offsetWidth;
-    const totalTrackWidth = this.cards.length * cardWidth;
-    
-    // Detect mobile (screens under 768px)
+
+  update(animate = true) {
     const isMobile = window.innerWidth < 768;
-    
-    let finalTranslateX;
-    
+    let x = 0;
+
     if (isMobile) {
-      // MOBILE: Center-snap each card
-      const singleCardWidth = 320; // Card width without gap
-      const centerOffset = (sliderWidth - singleCardWidth) / 2;
-      
-      // Calculate position to center the current card
-      finalTranslateX = -(this.currentIndex * cardWidth) + centerOffset;
-      
-      // Clamp to prevent scrolling past first/last card
-      const maxTranslateX = -(totalTrackWidth - sliderWidth);
-      finalTranslateX = Math.max(finalTranslateX, maxTranslateX);
-      finalTranslateX = Math.min(finalTranslateX, centerOffset);
-      
+      const { width, gap } = this.getMetrics();
+      const step = width + gap;
+      const center = this.slider.offsetWidth / 2;
+      x = center - (this.index * step + width / 2);
+
+      const min = this.slider.offsetWidth - (this.cards.length * step - gap);
+      x = Math.max(min, Math.min(x, 0));
     } else {
-      // DESKTOP: Left-align (original behavior)
-      let desiredTranslateX = -this.currentIndex * cardWidth;
-      const maxTranslateX = -(totalTrackWidth - sliderWidth);
-      
-      finalTranslateX = Math.max(desiredTranslateX, maxTranslateX);
-      finalTranslateX = Math.min(finalTranslateX, 0);
+      x = -this.index * 344;
     }
-    
-    this.translateX = finalTranslateX;
-    this.track.style.transition = animate ? 'transform 0.5s ease' : 'none';
-    this.track.style.transform = `translateX(${this.translateX}px)`;
+
+    this.translateX = x;
+    this.track.style.transition = animate ? 'transform .45s ease' : 'none';
+    this.track.style.transform = `translateX(${x}px)`;
   }
-  
-  slide(direction) {
-    this.stopAutoSlide();
-    const maxIndex = this.getMaxIndex();
-    this.currentIndex = Math.max(0, Math.min(this.currentIndex + direction, maxIndex));
-    
-    // Update auto-slide direction based on manual interaction
-    this.autoSlideDirection = direction;
-    
-    this.updatePosition(true);
-    this.startAutoSlide();
-  }
-  
-  // Normalize input and return an object with clientX and originalEvent
-  _getPointInfo(e) {
-    if (!e) return { clientX: 0, originalEvent: e };
-    if (e.type && e.type.startsWith('touch')) {
-      // Touch event
-      const touch = e.touches && e.touches[0] ? e.touches[0] : (e.changedTouches && e.changedTouches[0]);
-      return { clientX: touch ? touch.clientX : 0, originalEvent: e };
-    }
-    // Mouse event or a Touch/Pointer-like object passed directly
-    if (typeof e.clientX === 'number') {
-      return { clientX: e.clientX, originalEvent: e };
-    }
-    return { clientX: 0, originalEvent: e };
-  }
-  
+
   startDrag(e) {
-    this.stopAutoSlide();
-    this.isDragging = true;
-    const info = this._getPointInfo(e);
-    this.startX = info.clientX;
-    this.currentX = info.clientX;
-    this.slider.style.cursor = 'grabbing';
+    this.stop();
+    this.dragging = true;
+    document.body.classList.add('dragging');
+    this.startX = e.touches ? e.touches[0].clientX : e.clientX;
     this.track.style.transition = 'none';
   }
-  
+
   drag(e) {
-    if (!this.isDragging) return;
-    
-    const info = this._getPointInfo(e);
-    const currentX = info.clientX;
-    const diff = Math.abs(currentX - this.startX);
-    
-    // Only prevent default when user has moved enough to be considered a drag.
-    if (diff > 5 && info.originalEvent && typeof info.originalEvent.preventDefault === 'function') {
-      info.originalEvent.preventDefault();
-    }
-    
-    this.currentX = currentX;
-    const dragDiff = this.currentX - this.startX;
-    this.track.style.transform = `translateX(${this.translateX + dragDiff}px)`;
+    if (!this.dragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const diff = x - this.startX;
+    if (Math.abs(diff) > 6 && e.cancelable) e.preventDefault();
+    this.track.style.transform = `translateX(${this.translateX + diff}px)`;
+    this.currentX = x;
   }
-  
+
   endDrag() {
-    if (!this.isDragging) return;
-    
-    this.isDragging = false;
-    this.slider.style.cursor = 'grab';
-    this.track.style.transition = 'transform 0.5s ease';
-    
-    const diff = this.currentX - this.startX;
-    const cardWidth = 344;
-    
-    if (Math.abs(diff) > cardWidth / 3) {
-      if (diff > 0) {
-        this.slide(-1);
-      } else {
-        this.slide(1);
-      }
-    } else {
-      this.updatePosition(true);
-      this.startAutoSlide();
-    }
-  }
-  
-  openModal(card) {
-    const title = card.dataset.title;
-    const desc = card.dataset.desc;
-    const img = card.dataset.img;
-    
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalDescription').textContent = desc;
-    document.getElementById('modalImage').src = img;
-    
-    const modal = document.getElementById('destinationModal');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (!this.dragging) return;
+    this.dragging = false;
+    document.body.classList.remove('dragging');
+    this.update(true);
+    this.start();
   }
 }
-
 new DestinationsSlider();
 
-// Modal
+/* ===============================
+   DESTINATION POPUP (MODAL)
+================================ */
 const modal = document.getElementById('destinationModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDescription');
+const modalImage = document.getElementById('modalImage');
 const modalClose = document.getElementById('modalClose');
 const modalOverlay = document.querySelector('.modal-overlay');
 const modalBookBtn = document.getElementById('modalBookBtn');
+
+function openDestinationModal(card) {
+  modalTitle.textContent = card.dataset.title || '';
+  modalDesc.textContent = card.dataset.desc || '';
+  modalImage.src = card.dataset.img || '';
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
 function closeModal() {
   modal.classList.remove('active');
   document.body.style.overflow = '';
 }
 
+document.querySelectorAll('.destination-card').forEach(card => {
+  card.addEventListener('click', () => {
+    if (document.body.classList.contains('dragging')) return;
+    openDestinationModal(card);
+  });
+});
+
 modalClose?.addEventListener('click', closeModal);
 modalOverlay?.addEventListener('click', closeModal);
 modalBookBtn?.addEventListener('click', closeModal);
 
-// Close modal on Escape key
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && modal.classList.contains('active')) {
     closeModal();
   }
 });
 
-// Booking Form
+/* ===============================
+   BOOKING FORM
+================================ */
 const bookingForm = document.getElementById('bookingForm');
-
-bookingForm?.addEventListener('submit', (e) => {
+bookingForm?.addEventListener('submit', e => {
   e.preventDefault();
-  
-  const formData = new FormData(bookingForm);
-  const data = Object.fromEntries(formData);
-  
-  console.log('Booking Data:', data);
-  
   alert('Thank you for your booking request! We will contact you shortly.');
   bookingForm.reset();
 });
 
-// Smooth Scroll
+/* ===============================
+   SMOOTH SCROLL
+================================ */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    
-    if (target) {
-      const navbarHeight = navbar.offsetHeight;
-      const targetPosition = target.offsetTop - navbarHeight;
-      
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-    }
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (!target) return;
+    window.scrollTo({
+      top: target.offsetTop - navbar.offsetHeight,
+      behavior: 'smooth'
+    });
   });
 });
 
-// Set minimum date for booking
-const dateInput = document.getElementById('date');
-if (dateInput) {
-  const today = new Date().toISOString().split('T')[0];
-  dateInput.setAttribute('min', today);
-}
-
-// Intersection Observer for animations
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
+/* ===============================
+   INTERSECTION OBSERVER
+================================ */
+const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
       entry.target.style.transform = 'translateY(0)';
     }
   });
-}, observerOptions);
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-document.querySelectorAll('.destination-card, .package-card, .booking-feature, .contact-method').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(30px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  observer.observe(el);
-});
+document
+  .querySelectorAll('.destination-card, .package-card, .booking-feature, .contact-method')
+  .forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity .6s ease, transform .6s ease';
+    observer.observe(el);
+  });
